@@ -18,6 +18,12 @@ sudo systemctl enable jenkins
 ## Start Jenkins as a service:
 sudo systemctl start jenkins
 
+## install git
+sudo yum install git -y
+
+# install pip
+sudo yum install python3-pip.noarch -y
+
 sleep 5
 
 #sudo cat /var/lib/jenkins/secrets/initialAdminPassword
