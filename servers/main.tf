@@ -5,12 +5,11 @@ provider "aws" {
 
 
 resource "aws_instance" "server" {
-  count         = length(local.instance)
-  ami           = local.instance[count.index].ami
-  instance_type = local.instance[count.index].instance_type 
-  user_data     = file("${path.module}/scripts/${local.instance[count.index].script}")
-  //key_name      = aws_key_pair.ec2_key.key_name
-  #count                  = ""
+  count                  = length(local.instance)
+  ami                    = local.instance[count.index].ami
+  instance_type          = local.instance[count.index].instance_type
+  user_data              = file("${path.module}/scripts/${local.instance[count.index].script}")
+  key_name               = var.keyName
   vpc_security_group_ids = [aws_security_group.security_sg[count.index].id]
   subnet_id              = var.vpc_id == "default" ? aws_default_subnet.default_sub[0].id : var.vpc_id
 
@@ -19,8 +18,8 @@ resource "aws_instance" "server" {
     local.instance[count.index].name == "qa" ? var.qa_tag :
     local.instance[count.index].name == "dev" ? var.dev_tag :
     local.instance[count.index].name == "nexus" ? var.nexus_tag :
-    local.instance[count.index].name == "sonar" ? var.sonar_tag : { Name = "" })
-  
+  local.instance[count.index].name == "sonar" ? var.sonar_tag : { Name = "" })
+
   root_block_device {
     volume_size = local.instance[count.index].volume_size
   }
@@ -54,14 +53,14 @@ resource "aws_security_group" "security_sg" {
     cidr_blocks = ["0.0.0.0/0"] //
     protocol    = "tcp"
   }
-  ingress { // corresponding to inbound into aws console
-    description = "open the http"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  # ingress { // corresponding to inbound into aws console
+  #   description = "open the http"
+  #   from_port   = 80
+  #   to_port     = 80
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
 
-  }
+  # }
   egress {
     from_port   = 0
     to_port     = 0

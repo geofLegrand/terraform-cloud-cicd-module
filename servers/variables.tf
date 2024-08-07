@@ -34,7 +34,19 @@ variable "servers" {
       volume_size : 30,
       ami : "ami-0a0e5d9c7acc336f1",
       tag : "",
-    id : 3 }
+      id : 3
+    },
+    { name : "nexus",
+      script : "install_nexus.sh",
+      port : 80,
+      description : "open the port of my nexus server",
+      sg_name : "allow access on ports 80 and 22"
+      instance_type : "t2.micro",
+      volume_size : 30,
+      ami : "ami-0440d3b780d96b29d",
+      tag : "",
+      id : 4
+    }
 
 
   ]
@@ -80,6 +92,16 @@ variable "son_instance_type" {
   }
 }
 
+variable "nexus_instance_type" {
+  description = "the default image is t2.medium"
+
+  validation {
+    condition     = var.nexus_instance_type != ""
+    error_message = "Error: the nexus_instance_type must be no empty"
+  }
+}
+
+
 variable "qa_instance_type" {
   description = "the default image is t2.medium"
 
@@ -100,62 +122,62 @@ variable "dev_instance_type" {
 
 
 
-variable "jfrog_v_size" {
+variable "volume_jfrog_size" {
   description = "the default volume size is 20"
   type        = number
   validation {
-    condition     = var.jfrog_v_size >= 8
-    error_message = "Error: the jfrog_v_size must be no empty"
+    condition     = var.volume_jfrog_size >= 8
+    error_message = "Error: the volume_jfrog_size must be no empty"
   }
 }
 
-variable "jenkins_v_size" {
+variable "volume_jenkins_size" {
   description = "the default volume size is 20"
   type        = number
 
   validation {
-    condition     = var.jenkins_v_size >= 8
-    error_message = "Error: the jenkins_v_size must be grather than 8"
+    condition     = var.volume_jenkins_size >= 8
+    error_message = "Error: the volume_jenkins_size must be grather than 8"
   }
 }
 
-variable "nexus_v_size" {
+variable "volume_nexus_size" {
   description = "the default volume size is 20"
   type        = number
 
   validation {
-    condition     = var.nexus_v_size >= 8
-    error_message = "Error: the nexus_v_size must be grather than 8"
+    condition     = var.volume_nexus_size >= 8
+    error_message = "Error: the volume_nexus_size must be grather than 8"
   }
 }
 
-variable "sonar_v_size" {
+variable "volume_sonar_size" {
   description = "the default volume size is 20"
   type        = number
 
   validation {
-    condition     = var.sonar_v_size >= 8
-    error_message = "Error: the sonar_v_size must be grather than 8"
+    condition     = var.volume_sonar_size >= 8
+    error_message = "Error: the volume_sonar_size must be grather than 8"
   }
 }
 
-variable "qa_v_size" {
+variable "volume_qa_size" {
   description = "the default volume size is 20"
   type        = number
 
   validation {
-    condition     = var.qa_v_size >= 8
-    error_message = "Error: qa_v_size must be grather than 8"
+    condition     = var.volume_qa_size >= 8
+    error_message = "Error: volume_qa_size must be grather than 8"
   }
 }
 
-variable "dev_v_size" {
+variable "volume_dev_size" {
   description = "the default volume size is 20"
   type        = number
 
   validation {
-    condition     = var.dev_v_size >= 8
-    error_message = "Error: the dev_v_size must be no empty"
+    condition     = var.volume_dev_size >= 8
+    error_message = "Error: the volume_dev_size must be no empty"
   }
 }
 
@@ -205,6 +227,10 @@ variable "install_sonar" {
   type    = bool
   default = false
 }
+variable "install_nexus" {
+  type    = bool
+  default = false
+}
 variable "install_dev" {
   type    = bool
   default = false
@@ -232,3 +258,4 @@ variable "sonar_subnet" {
   default = "0"
 }
 
+variable "keyName" {}

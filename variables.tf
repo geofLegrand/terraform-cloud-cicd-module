@@ -2,6 +2,10 @@ variable "install_jenkins" {
   type    = bool
   default = false
 }
+variable "install_nexus" {
+  type    = bool
+  default = false
+}
 variable "install_jfrog" {
   type    = bool
   default = false
@@ -31,8 +35,8 @@ variable "jen_instance_type" {
 
 }
 variable "nex_instance_type" {
-  description = "the default image is t2.medium"
-  default     = "t2.medium"
+  description = "the default image is t2.micro"
+  default     = "t2.micro"
 
 }
 variable "son_instance_type" {
@@ -49,43 +53,46 @@ variable "qa_instance_type" {
 variable "dev_instance_type" {
   description = "the default image is t2.medium"
   default     = "t2.medium"
-
 }
 
 
 
-variable "jfrog_v_size" {
+
+variable "volume_jfrog_size" {
   description = "the default value is 20"
   default     = 20
 }
 
-variable "jenkins_v_size" {
-  description = "the default value is 20"
-  default = 20
-}
-
-variable "nexus_v_size" {
-  description = "the default value is 20"
-  default = 20
-}
-
-variable "sonar_v_size" {
+variable "volume_jenkins_size" {
   description = "the default value is 20"
   default     = 20
 }
 
-variable "qa_v_size" {
+variable "volume_nexus_size" {
   description = "the default value is 20"
   default     = 20
-
 }
 
-variable "dev_v_size" {
+variable "volume_sonar_size" {
+  description = "the default value is 20"
+  default     = 20
+}
+
+variable "volume_qa_size" {
   description = "the default value is 20"
   default     = 20
 
 }
 
+variable "volume_dev_size" {
+  description = "the default value is 20"
+  default     = 20
+
+}
+
+variable "keyName" {
+  default = ""
+}
 
 variable "jfrog_tag" {
   description = "the default { Name = jfrog_server Env = Dev  }"
@@ -93,6 +100,10 @@ variable "jfrog_tag" {
   default = {
     Name = "jfrog_server"
     Env  = "Dev"
+  }
+  validation {
+    condition     = var.jfrog_tag != ""
+    error_message = "this variable must be not empty "
   }
 }
 
@@ -103,6 +114,11 @@ variable "jenkins_tag" {
     Name = "jenkins_server"
     Env  = "Dev"
   }
+
+  validation {
+    condition     = var.jenkins_tag != ""
+    error_message = "this variable must be not empty "
+  }
 }
 
 variable "nexus_tag" {
@@ -111,6 +127,10 @@ variable "nexus_tag" {
   default = {
     Name = "nexus_server"
     Env  = "Dev"
+  }
+  validation {
+    condition     = var.nexus_tag != ""
+    error_message = "this variable must be not empty "
   }
 }
 
@@ -121,6 +141,10 @@ variable "sonar_tag" {
     Name = "sonar_server"
     Env  = "Dev"
   }
+  validation {
+    condition     = var.sonar_tag != ""
+    error_message = "this variable must be not empty "
+  }
 }
 
 variable "qa_tag" {
@@ -130,14 +154,23 @@ variable "qa_tag" {
     Name = "qa_server"
     Env  = "Dev"
   }
+  validation {
+    condition     = var.qa_tag != ""
+    error_message = "this variable must be not empty "
+  }
 }
 
 variable "dev_tag" {
   description = "the default { Name = dev_server Env = Dev  }"
-
+  type        = map(string)
   default = {
     Name = "dev_server"
     Env  = "Dev"
+  }
+
+  validation {
+    condition     = var.dev_tag != ""
+    error_message = "this variable must be not empty "
   }
 }
 
@@ -150,34 +183,19 @@ variable "region" {
 
 
 variable "jenkin_port" {
-    default = "8080"
+  default = "8080"
 }
 
 variable "jfrog_port" {
-    default = "8081"
+  default = "8081"
 }
 
 variable "sonar_port" {
-    default = "9000"
+  default = "9000"
 }
 
 variable "nexus_port" {
-    default = "8080"
+  default = "80"
 }
 
-variable "so_key" {
-    description = "do not modify this value"
-  default = "sonar_server" 
-}
-variable "jf_key" {
-    description = "do not modify this value"
-  default = "jfrog_server" 
-}
-variable "je_key" {
-    description = "do not modify this value"
-  default = "jenkins_server" 
-}
-variable "ne_key" {
-    description = "do not modify this value"
-  default = "nexus_server" 
-}
+
