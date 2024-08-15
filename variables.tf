@@ -36,7 +36,7 @@ variable "jen_instance_type" {
 }
 variable "nex_instance_type" {
   description = "the default image is t2.micro"
-  default     = "t2.micro"
+  default     = "t2.medium"
 
 }
 variable "son_instance_type" {
@@ -195,7 +195,7 @@ variable "sonar_port" {
 }
 
 variable "nexus_port" {
-  default = "80"
+  default = "8081"
 }
 
 

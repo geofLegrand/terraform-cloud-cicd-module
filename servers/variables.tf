@@ -30,7 +30,7 @@ variable "servers" {
       port : 9000,
       description : "open the port of my sonar server",
       sg_name : "allow access on ports 9000 and 22"
-      instance_type : "t2.micro",
+      instance_type : "t2.medium",
       volume_size : 30,
       ami : "ami-0a0e5d9c7acc336f1",
       tag : "",
@@ -41,9 +41,9 @@ variable "servers" {
       port : 80,
       description : "open the port of my nexus server",
       sg_name : "allow access on ports 80 and 22"
-      instance_type : "t2.micro",
+      instance_type : "t2.medium",
       volume_size : 30,
-      ami : "ami-0440d3b780d96b29d",
+      ami : "ami-0a0e5d9c7acc336f1",
       tag : "",
       id : 4
     }

@@ -34,7 +34,7 @@ locals {
       "sonar_url"      = local.t[i] == local.so_key ? "http://${local.dns[i]}:${var.sonar_port}" : ""
       "sonar_ip_priv"  = local.t[i] == local.so_key ? local.adr_pr[i] : ""
       "sonar_ip_pub"   = local.t[i] == local.so_key ? local.adr_pu[i] : ""
-      "sonar_ssh_link" = local.t[i] == local.so_key && var.keyName != "" ? "ssh -i ${var.keyName}.pem  ubuntu@${local.adr_pu[i]}" : ""
+      "sonar_ssh_link" = local.t[i] == local.so_key && var.keyName != "" ? "ssh -i ${var.keyName}.pem ubuntu@${local.adr_pu[i]}" : ""
     }
 
   ] : e if e.sonar_id != ""]
@@ -45,7 +45,7 @@ locals {
       "nexus_url"      = local.t[i] == local.nx_key ? "http://${local.dns[i]}:${var.nexus_port}" : ""
       "nexus_ip_priv"  = local.t[i] == local.nx_key ? local.adr_pr[i] : ""
       "nexus_ip_pub"   = local.t[i] == local.nx_key ? local.adr_pu[i] : ""
-      "nexus_ssh_link" = local.t[i] == local.nx_key && var.keyName != "" ? "ssh -i ${var.keyName}.pem  ec2-user@${local.adr_pu[i]}" : ""
+      "nexus_ssh_link" = local.t[i] == local.nx_key && var.keyName != "" ? "ssh -i ${var.keyName}.pem  ubuntu@${local.adr_pu[i]}" : ""
     }
 
   ] : e if e.nexus_id != ""]
